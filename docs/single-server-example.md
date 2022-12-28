@@ -120,7 +120,7 @@ Note: Change the password from `changeit` to more secure one.
 Deploy the mariadb container
 
 ```shell
-docker compose --project-name mariadb --env-file ~/gitops/mariadb.env -f docs/compose/compose.mariadb-shared.yaml up -d
+docker-compose --project-name mariadb --env-file ~/gitops/mariadb.env -f docs/compose/compose.mariadb-shared.yaml up -d
 ```
 
 This will make `mariadb-database` service available under `mariadb-network`. Data will reside in `/data/mariadb`.
@@ -152,7 +152,7 @@ env file is generated at location `~/gitops/erpnext-one.env`.
 Create a yaml file called `erpnext-one.yaml` in `~/gitops` directory:
 
 ```shell
-docker compose --project-name erpnext-one \
+docker-compose --project-name erpnext-one \
   --env-file ~/gitops/erpnext-one.env \
   -f compose.yaml \
   -f overrides/compose.erpnext.yaml \
@@ -168,14 +168,14 @@ Use the above command after any changes are made to `erpnext-one.env` file to re
 Deploy `erpnext-one` containers:
 
 ```shell
-docker compose --project-name erpnext-one -f ~/gitops/erpnext-one.yaml up -d
+docker-compose --project-name erpnext-one -f ~/gitops/erpnext-one.yaml up -d
 ```
 
 Create sites `one.example.com` and `two.example.com`:
 
 ```shell
 # one.example.com
-docker compose --project-name erpnext-one exec backend \
+docker-compose --project-name erpnext-one exec backend \
   bench new-site one.example.com --mariadb-root-password changeit --install-app erpnext --admin-password changeit
 ```
 
@@ -183,7 +183,7 @@ You can stop here and have a single bench single site setup complete. Continue t
 
 ```shell
 # two.example.com
-docker compose --project-name erpnext-one exec backend \
+docker-compose --project-name erpnext-one exec backend \
   bench new-site two.example.com --mariadb-root-password changeit --install-app erpnext --admin-password changeit
 ```
 
@@ -214,7 +214,7 @@ env file is generated at location `~/gitops/erpnext-two.env`.
 Create a yaml file called `erpnext-two.yaml` in `~/gitops` directory:
 
 ```shell
-docker compose --project-name erpnext-two \
+docker-compose --project-name erpnext-two \
   --env-file ~/gitops/erpnext-two.env \
   -f compose.yaml \
   -f overrides/compose.erpnext.yaml \
@@ -228,17 +228,17 @@ Use the above command after any changes are made to `erpnext-two.env` file to re
 Deploy `erpnext-two` containers:
 
 ```shell
-docker compose --project-name erpnext-two -f ~/gitops/erpnext-two.yaml up -d
+docker-compose --project-name erpnext-two -f ~/gitops/erpnext-two.yaml up -d
 ```
 
 Create sites `three.example.com` and `four.example.com`:
 
 ```shell
 # three.example.com
-docker compose --project-name erpnext-two exec backend \
+docker-compose --project-name erpnext-two exec backend \
   bench new-site three.example.com --mariadb-root-password changeit --install-app erpnext --admin-password changeit
 # four.example.com
-docker compose --project-name erpnext-two exec backend \
+docker-compose --project-name erpnext-two exec backend \
   bench new-site four.example.com --mariadb-root-password changeit --install-app erpnext --admin-password changeit
 ```
 
@@ -269,7 +269,7 @@ env file is generated at location mentioned in command.
 Generate yaml to reverse proxy:
 
 ```shell
-docker compose --project-name custom-one-example \
+docker-compose --project-name custom-one-example \
   --env-file ~/gitops/custom-one-example.env \
   -f docs/compose/compose.custom-domain.yaml \
   -f docs/compose/compose.custom-domain-ssl.yaml config > ~/gitops/custom-one-example.yaml
@@ -280,7 +280,7 @@ For LAN setup do not override `compose.custom-domain-ssl.yaml`.
 Deploy `erpnext-two` containers:
 
 ```shell
-docker compose --project-name custom-one-example -f ~/gitops/custom-one-example.yaml up -d
+docker-compose --project-name custom-one-example -f ~/gitops/custom-one-example.yaml up -d
 ```
 
 ### Site operations
